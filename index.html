@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NovaPulse AI</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<div class="app">
+
+    <aside class="sidebar">
+
+        <div class="logo">
+            🚀 NovaPulse
+        </div>
+
+        <button class="new-chat-btn" onclick="newChat()">
+            + Nieuwe Chat
+        </button>
+
+        <div id="chatList" class="chat-list">
+        </div>
+
+    </aside>
+
+    <main class="chat-area">
+
+        <div class="header">
+            🚀 NovaPulse AI
+        </div>
+
+        <div id="chat" class="chat-container">
+        </div>
+
+        <div class="inputbar">
+            <input
+                id="message"
+                type="text"
+                placeholder="Typ een bericht..."
+                onkeydown="if(event.key==='Enter') sendMessage()"
+            >
+
+            <button onclick="sendMessage()">
+                Verstuur
+            </button>
+        </div>
+
+    </main>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
