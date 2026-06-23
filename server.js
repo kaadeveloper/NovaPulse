@@ -1,38 +1,55 @@
 const express = require("express");
-const OpenAI = require("openai");
 
 const app = express();
 
-const client = new OpenAI({
-    apiKey: process.env.OPENAI_API_KEY
-});
+const API_KEY = "np_d6d3f902045b4d7b932473907b541746";
+const PORT = process.env.PORT || 3000;
 
 app.use(express.json());
 app.use(express.static("."));
 
-app.post("/chat", async (req, res) => {
-    try {
-        const response = await client.responses.create({
-            model: "gpt-4.1-mini",
-            instructions: "Je bent NovaPulse AI. Antwoord altijd in het Nederlands. Wees vriendelijk, slim en behulpzaam.",
-            input: req.body.message
-        });
+// API-key controle
+function checkApiKey(req, res, next) {
+    const key = req.headers["x-api-key"];
 
-        res.json({
-            reply: response.output_text
-        });
-
-    } catch (error) {
-        console.error(error);
-
-        res.json({
-            reply: "NovaPulse AI kon geen antwoord ophalen."
+    if (key !== API_KEY) {
+        return res.status(401).json({
+            error: "Ongeldige API key"
         });
     }
+
+    next();
+}
+
+// Test route zonder key
+app.get("/", (req, res) => {
+    res.send("NovaPulse API draait!");
 });
 
-const PORT = process.env.PORT || 3000;
+// Status route met API key
+app.get("/api/status", checkApiKey, (req, res) => {
+    res.json({
+        status: "online",
+        name: "NovaPulse API",
+        version: "1.0.0"
+    });
+});
+
+// Eigen chat endpoint
+app.post("/chat", checkApiKey, (req, res) => {
+    const message = req.body.message;
+
+    if (!message) {
+        return res.status(400).json({
+            error: "Geen bericht ontvangen"
+        });
+    }
+
+    res.json({
+        reply: "NovaPulse API heeft je bericht ontvangen: " + message
+    });
+});
 
 app.listen(PORT, () => {
-  console.log(`NovaPulse AI draait op poort ${PORT}`);
+    console.log(`NovaPulse API draait op poort ${PORT}`);
 });
