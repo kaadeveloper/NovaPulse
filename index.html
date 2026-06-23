@@ -14,9 +14,8 @@
 <div class="app">
 
     <aside class="sidebar">
-
-        <div class="logo">
-            <img src="logo.png" alt="NovaPulse Logo">
+        <div class="brand">
+            <img src="logo.png" alt="NovaPulse" class="brand-logo">
             <span>NovaPulse</span>
         </div>
 
@@ -24,20 +23,27 @@
             + Nieuwe Chat
         </button>
 
-        <div id="chatList" class="chat-list"></div>
+        <div class="search-box">
+            <input type="text" placeholder="Zoek chats...">
+        </div>
 
+        <h3>Chats</h3>
+        <div id="chatList" class="chat-list"></div>
     </aside>
 
     <main class="chat-area">
-
-        <div class="header">
-            <img src="logo.png" alt="NovaPulse Logo">
-            <span>NovaPulse AI</span>
-        </div>
+        <header class="topbar">
+            <div class="main-title">
+                <img src="logo.png" alt="NovaPulse" class="title-logo">
+                <span>NovaPulse AI</span>
+            </div>
+        </header>
 
         <div id="chat" class="chat-container"></div>
 
         <div class="inputbar">
+            <button class="upload-btn" title="Bestand uploaden">📎</button>
+
             <input
                 id="message"
                 type="text"
@@ -45,11 +51,10 @@
                 onkeydown="if(event.key==='Enter') sendMessage()"
             >
 
-            <button onclick="sendMessage()">
+            <button class="send-btn" onclick="sendMessage()">
                 Verstuur
             </button>
         </div>
-
     </main>
 
 </div>
