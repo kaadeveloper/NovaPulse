@@ -8,6 +8,8 @@ app.use(express.static("."));
 
 app.post("/chat", async (req, res) => {
     try {
+        const message = req.body.message;
+
         const response = await fetch("http://127.0.0.1:11434/api/generate", {
             method: "POST",
             headers: {
@@ -15,9 +17,21 @@ app.post("/chat", async (req, res) => {
             },
             body: JSON.stringify({
                 model: "llama3.2",
-                prompt: `Je bent NovaPulse AI.
-Antwoord altijd in het Nederlands.
-Vraag van gebruiker: ${req.body.message}`,
+                prompt: `
+Je bent NovaPulse AI.
+
+Regels:
+- Antwoord altijd in het Nederlands.
+- Wees vriendelijk en behulpzaam.
+- Geef duidelijke antwoorden.
+- Gebruik markdown als dat handig is.
+- Je bent gemaakt door Zeno.
+- Je naam is NovaPulse AI.
+
+Gebruiker: ${message}
+
+NovaPulse AI:
+                `,
                 stream: false
             })
         });
@@ -32,11 +46,15 @@ Vraag van gebruiker: ${req.body.message}`,
         console.error(error);
 
         res.json({
-            reply: "NovaPulse AI kon Ollama niet bereiken."
+            reply: "❌ NovaPulse AI kon Ollama niet bereiken."
         });
     }
 });
 
+app.get("/", (req, res) => {
+    res.sendFile(__dirname + "/index.html");
+});
+
 app.listen(PORT, () => {
-    console.log(`NovaPulse AI draait op poort ${PORT}`);
+    console.log(`🚀 NovaPulse AI draait op http://localhost:${PORT}`);
 });
