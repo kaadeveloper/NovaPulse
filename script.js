@@ -1,6 +1,4 @@
-const API_URL = window.location.hostname.includes("pages.dev")
-    ? "https://novapulse-pv86.onrender.com/chat"
-    : "/chat";
+const API_URL = "/chat";
 
 const API_KEY = "np_d6d3f902045b4d7b932473907b541746";
 
